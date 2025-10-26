@@ -905,3 +905,6 @@
 
 //   logger.info("Finished seeding inventory levels data.");
 // }
+export default async () => {
+  // Your seeding logic here
+};
