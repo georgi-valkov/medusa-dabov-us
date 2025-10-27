@@ -22,10 +22,12 @@
     "test:unit": "TEST_TYPE=unit NODE_OPTIONS=--experimental-vm-modules jest --silent --runInBand --forceExit"
   },
   "dependencies": {
+    "@georgi-valkov/medusa-notification-nodemailer": "0.0.9",
     "@medusajs/admin-sdk": "2.11.1",
     "@medusajs/cli": "2.11.1",
     "@medusajs/framework": "2.11.1",
-    "@medusajs/medusa": "2.11.1"
+    "@medusajs/medusa": "2.11.1",
+    "@medusajs/ui": "4.0.24"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.11.1",

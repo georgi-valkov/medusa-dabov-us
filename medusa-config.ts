@@ -21,6 +21,9 @@ module.exports = defineConfig({
     redisUrl: process.env.REDIS_URL,
     workerMode: (process.env.WORKER_MODE as "shared" | "worker" | "server") || "shared",
   },
+  plugins: [
+    `@georgi-valkov/medusa-notification-nodemailer`
+  ],
   modules: [
     {
       resolve: "@medusajs/medusa/caching",
@@ -91,6 +94,37 @@ module.exports = defineConfig({
           },
         ],
       },
+    },
+    {
+      resolve: "@medusajs/medusa/notification",
+      options: {
+        providers: [
+          {
+            resolve: "@georgi-valkov/medusa-notification-nodemailer/providers/notification-nodemailer",
+            id: "notification-nodemailer",
+            options: {
+              type: "SES",
+              channels: ["email"],
+              from: process.env.SMTP_FROM || process.env.SES_FROM,
+              host: process.env.SMTP_HOST,
+              port: process.env.SMTP_PORT,
+              secure: true,
+              username: process.env.SMTP_USER,
+              password: process.env.SMTP_PASS,
+              region: process.env.SES_REGION,
+              accessKeyId: process.env.SES_ACCESS_KEY,
+              secretAccessKey: process.env.SES_SECRET_KEY,
+            }
+          },
+          {
+            resolve: "@medusajs/medusa/notification-local",
+            id: "local",
+            options: {
+              channels: ["feed"], // <-- Make sure "feed" is included here
+            },
+          }
+        ]
+      }
     },
   ]
 })
